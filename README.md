@@ -40,3 +40,5 @@ Limitations
 ## Next steps?
 
 I think there is lots of thing which I will improve. Next will be textured viewCube.
+
+If you have any ideas how to improve this project, just contact me! :)
