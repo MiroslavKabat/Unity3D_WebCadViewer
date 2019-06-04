@@ -48,7 +48,7 @@ public class MainCameraOrbit : MonoBehaviour
 		}
 
 		// Rotation: Rotation of the Camera based on Mouse Coordinates
-		if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKey(KeyCode.Mouse2))
+		if ( /* (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKey(KeyCode.Mouse2) || */ Input.GetKey(KeyCode.Mouse0))
 		{
 			if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
 			{
@@ -64,7 +64,7 @@ public class MainCameraOrbit : MonoBehaviour
 			_LocalRotation.y = 90f;
 
 		// Translation: Moving camera by holding middle mouse button (wheel)
-		if ((!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) && Input.GetKey(KeyCode.Mouse2))
+		if ( /* (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) && Input.GetKey(KeyCode.Mouse2) || */ Input.GetKey(KeyCode.Mouse1))
 		{
 			if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
 			{
