@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// Made by Miroslav Kabát 
+// www.MiroslavKabat.cz
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

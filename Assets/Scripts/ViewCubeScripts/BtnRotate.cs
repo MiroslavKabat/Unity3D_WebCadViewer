@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// Made by Miroslav Kabát 
+// www.MiroslavKabat.cz
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,26 +13,20 @@ public class BtnRotate : MonoBehaviour
 	public GameObject MainCamera;
 
 	public GameObject ImageObject;
-	public Sprite CheckedFalseSprite;
-	public Sprite CheckedTrueSprite;
+	public GameObject ImageObjectChecked;
 
 	// Use this for initialization
 	void Start()
 	{
-		ImageObject.GetComponent<Image>().sprite = CheckedFalseSprite;
+		ImageObject.GetComponent<Image>().gameObject.SetActive(!Checked);
+		ImageObjectChecked.GetComponent<Image>().gameObject.SetActive(Checked);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (Checked)
-		{
-			ImageObject.GetComponent<Image>().sprite = CheckedTrueSprite;
-		}
-		else
-		{
-			ImageObject.GetComponent<Image>().sprite = CheckedFalseSprite;
-		}
+		ImageObject.GetComponent<Image>().gameObject.SetActive(!Checked);
+		ImageObjectChecked.GetComponent<Image>().gameObject.SetActive(Checked);
 
 		MainCamera.GetComponent<MainCameraOrbit>().AutoRotate = Checked;
 	}
