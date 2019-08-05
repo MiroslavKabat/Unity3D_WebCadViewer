@@ -19,6 +19,9 @@ public class MainCameraOrbit : MonoBehaviour
 	private float OrbitDampening = 10f;
 	private float ScrollDampening = 6f;
 
+	private float MaxScrollZoomOut = -100;
+	private float MaxTranslationRadius = 50;
+
 	public bool AutoRotate;
 	public bool ArrowsHeld;
 	public float ScrollAmount;
@@ -40,7 +43,7 @@ public class MainCameraOrbit : MonoBehaviour
 		if (AutoRotate)
 		{
 			if (!ArrowsHeld)
-			{ 
+			{
 				_LocalRotation.x += (-1) * 0.15f * ScrollSensitvity;
 				ArrowsHeld = false;
 			}
@@ -80,6 +83,34 @@ public class MainCameraOrbit : MonoBehaviour
 		_CameraPosition += _LocalTransform;
 		_LocalTransform = new Vector3();
 
+		// Translation: Maximum
+		if (Math.Pow(Math.Pow(_CameraPosition.x, 2) + Math.Pow(_CameraPosition.y, 2), 0.5) > MaxTranslationRadius)
+		{
+			if (_CameraPosition.x != 0 && _CameraPosition.y != 0)
+			{
+				float alfa = Convert.ToSingle(Math.Atan(_CameraPosition.y / _CameraPosition.x));
+				float x = Convert.ToSingle(Math.Abs(MaxTranslationRadius * Math.Cos(alfa)));
+				float y = Convert.ToSingle(Math.Abs(MaxTranslationRadius * Math.Sin(alfa)));
+
+				_CameraPosition.x = _CameraPosition.x < 0 ? -1 * x : x;
+				_CameraPosition.y = _CameraPosition.y < 0 ? -1 * y : y;
+			}
+			else
+			{
+				if (_CameraPosition.x == 0)
+				{
+					float y = MaxTranslationRadius;
+					_CameraPosition.y = _CameraPosition.y < 0 ? -1 * y : y;
+				}
+
+				if (_CameraPosition.y == 0)
+				{
+					float x = MaxTranslationRadius;
+					_CameraPosition.x = _CameraPosition.x < 0 ? -1 * x : x;
+				}
+			}
+		}
+
 		// Zooming: Zooming Input from our Mouse Scroll Wheel
 		if (Input.GetAxis("Mouse ScrollWheel") != 0f)
 		{
@@ -90,6 +121,12 @@ public class MainCameraOrbit : MonoBehaviour
 		ScrollAmount *= (this._CameraPosition.z * 0.5f);
 		this._CameraPosition.z -= ScrollAmount;
 		ScrollAmount = 0;
+
+		// Zooming: Maximum
+		if (this._CameraPosition.z < MaxScrollZoomOut)
+		{
+			this._CameraPosition.z = MaxScrollZoomOut;
+		}
 
 		// Finally: Actual Camera Rig Transformations
 		Quaternion QT = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
